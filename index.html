@@ -1,0 +1,71 @@
+<html lang="en" typeof="Html">
+<head >
+    <title>Sokoban</title>
+    <script src="./lib/constants.js"></script>
+    <script src="./lib/render/html.js"></script>
+    <script src="./lib/controller/keyboard.js"></script>
+    <script src="./levels/level1.js"></script>
+    <script src="./levels/level2.js"></script>
+    <script src="./levels/level3.js"></script>
+    <script src="./levels/level4.js"></script>
+    <script src="./levels/level5.js"></script>
+    <script src="./levels/level6.js"></script>
+    <script src="./levels/level7.js"></script>
+    <script src="./levels/level8.js"></script>
+    <script src="./lib/items/baseItem.js"></script>
+    <script src="./lib/items/mine.js"></script>
+    <script src="./lib/items/empty.js"></script>
+    <script src="./lib/items/player.js"></script>
+    <script src="./lib/items/wall.js"></script>
+    <script src="./lib/items/boxPlace.js"></script>
+    <script src="./lib/game.js"></script>
+
+   </head>
+<style>
+ #success {
+     position: absolute;
+     margin-left: auto;
+     margin-right: auto;
+     text-align: center;
+     width:100%;
+     height:100%;
+     background:transparent;
+     color:green;
+     font-size: 24px;
+ }
+ .box {
+     background: url('assets/images/box.png')  repeat ;
+     background-size: 50px;
+     background-position-x:-10px;
+     width: 30px;
+     height:30px;
+     background-position-y:-10px    ;
+ }
+ .player {
+     border-radius: 50%;
+ }
+
+</style>
+<body>
+
+<p>Welcome to the Sokoban game. Push all the boxes to marked position to get to next level.</p>
+<div id="score-screen">
+    Completed: <span id="completed">0</span> Level: <span id="level"></span>
+    <button onclick="game.restartLevel()">restart level</button>
+</div>
+
+<div style="position:relative; display: inline-block" >
+    <div id="success"></div>
+    <div id="main-screen">
+    </div>
+</div>
+
+
+<script  >
+    var game = new Game(GameScreenId);
+    console.log('game', game)
+</script>
+
+
+</body>
+</html>
