@@ -22,6 +22,9 @@
 
    </head>
 <style>
+   html body {
+        margin: auto;
+    }
  #success {
      position: absolute;
      margin-left: auto;
@@ -45,19 +48,38 @@
      border-radius: 50%;
  }
 
+   .content {
+
+       background-color: grey;
+       margin:0  auto;
+       text-align: center;
+       height:100%;
+       padding-top:10%;
+   }
+
 </style>
 <body>
 
-<p>Welcome to the Sokoban game. Push all the boxes to marked position to get to next level.</p>
-<div id="score-screen">
-    Completed: <span id="completed">0</span> Level: <span id="level"></span>
-    <button onclick="game.restartLevel()">restart level</button>
-</div>
 
-<div style="position:relative; display: inline-block" >
-    <div id="success"></div>
-    <div id="main-screen">
+<div class="content" >
+
+    <p>Welcome to the Sokoban game. Push all the boxes to marked position to get to next level.</p>
+    <div id="score-screen">
+        Completed: <span id="completed">0</span> Level: <span id="level"></span> Moves: <span id="moves">0</span>
+        Score: <span id="score">0</span>
+        <div style="margin: 20px;">
+            <button onclick="game.restartLevel()">restart level</button>
+        </div>
     </div>
+
+        <div id="success"></div>
+
+    <div style="background:white; display: inline-block">
+        <div id="main-screen"></div>
+
+    </div>
+
+
 </div>
 
 
