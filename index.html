@@ -4,14 +4,8 @@
     <script src="./lib/constants.js"></script>
     <script src="./lib/render/html.js"></script>
     <script src="./lib/controller/keyboard.js"></script>
-    <script src="./levels/level1.js"></script>
-    <script src="./levels/level2.js"></script>
-    <script src="./levels/level3.js"></script>
-    <script src="./levels/level4.js"></script>
-    <script src="./levels/level5.js"></script>
-    <script src="./levels/level6.js"></script>
-    <script src="./levels/level7.js"></script>
-    <script src="./levels/level8.js"></script>
+    <script src="./levels/levels.js"></script>
+
     <script src="./lib/items/baseItem.js"></script>
     <script src="./lib/items/mine.js"></script>
     <script src="./lib/items/empty.js"></script>
@@ -44,8 +38,51 @@
      height:30px;
      background-position-y:-10px    ;
  }
+
+   .wall {
+       background: url('assets/images/wall.png')  repeat ;
+       background-size: 63px;
+       background-position-x:-10px;
+       background-position-y:-10px;
+       width: 30px;
+       height:30px;
+
+   }
+
  .player {
-     border-radius: 50%;
+     background: no-repeat url('assets/images/avatar.png') ;
+     background-size: 70px;
+     background-position-x : -3px;
+     background-position-y:  -4px;
+ }
+.player.moveDown{
+    background-position-x : -3px;
+    background-position-y:  -4px;
+}
+
+   .player.moveUp{
+       background-position-x :-36px;
+       background-position-y: -37px
+   }
+
+   .player.moveRight{
+       background-position-x :-36px;
+       background-position-y: -4px
+   }
+
+   .player.moveLeft{
+       background-position-x :-4px;
+       background-position-y: -37px
+   }
+.box {
+    opacity: 0.8;
+}
+
+   .box.completed {
+     opacity: 1;
+           width: 29px !important;
+       height: 29px  !important;;
+     border: 1px dashed GREEN !important;
  }
 
    .content {
@@ -56,7 +93,26 @@
        height:100%;
        padding-top:10%;
    }
+   #success {
+       position:absolute;
+       margin: 0 auto;
+       width: 100%;
+       height: 100%;
+       background: white;
+       opacity: 0.9;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+   }
+   #success div{
+        margin-top: 100px;
+   }
 
+   .hud {
+       border: 1px solid orange;
+       padding: 20px;
+       background:white;
+   }
 </style>
 <body>
 
@@ -64,19 +120,21 @@
 <div class="content" >
 
     <p>Welcome to the Sokoban game. Push all the boxes to marked position to get to next level.</p>
-    <div id="score-screen">
-        Completed: <span id="completed">0</span> Level: <span id="level"></span> Moves: <span id="moves">0</span>
-        Score: <span id="score">0</span>
-        <div style="margin: 20px;">
-            <button onclick="game.restartLevel()">restart level</button>
+
+
+    <div style="background:white; display: inline-block; position:relative">
+        <div id="score-screen">
+            <div class="hud">
+                Completed: <span id="completed">0</span> Level: <span id="level"></span> Moves: <span id="moves">0</span>
+                Score: <span id="score">0</span>
+            </div>
+        </div>
+        <div id="main-screen"></div>
+        <div id="success">
         </div>
     </div>
-
-        <div id="success"></div>
-
-    <div style="background:white; display: inline-block">
-        <div id="main-screen"></div>
-
+    <div style="margin: 20px;">
+        <button onclick="game.restartLevel()">restart level</button>
     </div>
 
 
@@ -87,7 +145,6 @@
     var game = new Game(GameScreenId);
     console.log('game', game)
 </script>
-
 
 </body>
 </html>
