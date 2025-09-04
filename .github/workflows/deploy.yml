@@ -16,10 +16,11 @@ jobs:
       - name: 📂 Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          protocol: ftp
+          protocol: ftps
           server: ftp.divader.si
           port: 21
           username: zbarek@pusher.divader.si
           password: ${{ secrets.FTP_PASSWORD }}
+          insecure: true   # 👈 accept self-signed certs (use only if needed)
           server-dir: 	/home/divader/pusher.divader.si/
           local-dir: ./   # upload everything in repo root
