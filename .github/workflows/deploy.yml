@@ -19,13 +19,12 @@ jobs:
       - name: 📂 Deploy via FTP
         run: |
           lftp -e "
-            open -u "zbarek@pusher=.divader.si,${{ secrets.FTP_PASSWORD }}" ftp://ftp.divader.si;<<EOF
+            open -u "zbarek@pusher=.divader.si,${{ secrets.FTP_PASSWORD }}" ftp://ftp.divader.si;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate false;
             mirror -R --verbose ./ /home/divader/pusher.divader.si/;
            bye
-          EOF
           "
 
 
