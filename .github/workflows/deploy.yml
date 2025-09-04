@@ -16,9 +16,9 @@ jobs:
       - name: 📂 Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ftp.divader.si
           port: 21
-          username: ${{ secrets.FTP_USERNAME }}
+          username: zbarek@pusher.divader.si
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_ROOT }}
+          server-dir: 	/home/divader/pusher.divader.si/
           local-dir: ./   # upload everything in repo root
