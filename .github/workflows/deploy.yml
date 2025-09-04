@@ -24,3 +24,8 @@ jobs:
           security: loose   # 👈 accept self-signed certs (use only if needed)
           server-dir: 	/home/divader/pusher.divader.si/
           local-dir: ./   # upload everything in repo root
+          exclude: |
+            **/.git*
+            **/.git*/**
+             **/.git*
+            **/.idea
