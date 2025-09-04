@@ -17,19 +17,14 @@ jobs:
         run: sudo apt-get install -y lftp
 
       - name: 📂 Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          protocol: ftps
-          server: ftp.divader.si
-          port: 21
-          username: zbarek@pusher.divader.si
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /home/divader/pusher.divader.si/
-          local-dir: ./   # upload everything in repo root
-          exclude: |
-            **/.git*
-            **/.git*/**
-             **/.git*
-            **/.idea
+        run: |
+          lftp -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate false;
+            open -u zbarek@pusher=.divader.si,${{ secrets.FTP_PASSWORD }} ftp://ftp.divader.si;
+            mirror -R ./ /home/divader/pusher.divader.si/;
+            bye
+          "
 
 
