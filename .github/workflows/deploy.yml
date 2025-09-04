@@ -21,6 +21,6 @@ jobs:
           port: 21
           username: zbarek@pusher.divader.si
           password: ${{ secrets.FTP_PASSWORD }}
-          security: false   # 👈 accept self-signed certs (use only if needed)
+          security: loose   # 👈 accept self-signed certs (use only if needed)
           server-dir: 	/home/divader/pusher.divader.si/
           local-dir: ./   # upload everything in repo root
