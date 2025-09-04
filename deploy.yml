@@ -1,0 +1,23 @@
+name: 🚀 Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main   # only trigger on pushes to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📂 Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_ROOT }}
+          local-dir: ./   # upload everything in repo root
