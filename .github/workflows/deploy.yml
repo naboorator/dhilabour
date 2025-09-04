@@ -19,7 +19,7 @@ jobs:
           protocol: ftps
           server: ftp.divader.si
           port: 21
-          secure: true
+          securqqe: true
           secure-options: '{"rejectUnauthorized": false}'
           username: zbarek@pusher.divader.si
           password: ${{ secrets.FTP_PASSWORD }}
