@@ -16,7 +16,7 @@ jobs:
       - name: 📂 Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          protocol: ftps
+          protocol: ftp
           server: ftp.divader.si
           port: 21
           username: zbarek@pusher.divader.si
