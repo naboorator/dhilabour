@@ -1,0 +1,28 @@
+.player-tile {
+    background: no-repeat url('../../images/avatar.png');
+    background-size: 70px;
+    background-position-x: -3px;
+    background-position-y: -4px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.player-tile.moveDown {
+    background-position-x: -3px;
+    background-position-y: -4px;
+}
+
+.player-tile.moveUp {
+    background-position-x: -36px;
+    background-position-y: -37px
+}
+
+.player-tile.moveRight {
+    background-position-x: -36px;
+    background-position-y: -4px
+}
+
+.player-tile.moveLeft {
+    background-position-x: -4px;
+    background-position-y: -37px
+}

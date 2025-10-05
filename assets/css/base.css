@@ -1,0 +1,47 @@
+:root {
+    --delft-blue: #3a405aff;
+    --powder-blue: #aec5ebff;
+    --champagne-pink: #f9dec9ff;
+    --melon: #e9afa3ff;
+    --umber: #685044ff;
+
+    --floor-color: lightgrey;
+    --sprite-size: 30px;
+    --header-text-color: var(--primary-color);
+    --primary-color: var(--powder-blue);
+    --secndary-color: var(--champagne-pink);
+
+
+}
+
+.font-honk {
+    font-family: "Honk", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "MORF" 15,
+    "SHLN" 50;
+}
+
+.font-puddle {
+    font-family: "Rubik Puddles", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+html body {
+    margin: auto;
+    overflow: hidden;
+    background-color: var(--delft-blue);
+    font-family: "Monomaniac One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#main-screen {
+
+    height: 500px;
+    width: 480px
+}
+

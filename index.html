@@ -6,13 +6,17 @@
     <script src="./lib/render/html.js"></script>
     <script src="./lib/controller/keyboard.js"></script>
 
+    <script src="./lib/screens/base-screen.js"></script>
+    <script src="./lib/screens/loading-screen.js"></script>
     <script src="./lib/screens/menu-screen.js"></script>
+    <script src="./lib/screens/end-game.js"></script>
     <script src="./lib/screens/maze/maze-complete.js"></script>
     <script src="./lib/screens/maze/maze-handler.js"></script>
     <script src="./lib/screens/maze/maze-screen.js"></script>
     <script src="./lib/screens/maze/maze-controller.js"></script>
     <script src="./levels/levels.js"></script>
 
+    <script src="./lib/movement/constants.js"></script>
     <script src="./lib/movement/random.js"></script>
     <script src="./lib/movement/simpleAttackPlayer.js"></script>
     <script src="./lib/movement/shortestPath.js"></script>
@@ -26,184 +30,27 @@
     <script src="./lib/items/enemy.js"></script>
     <script src="./lib/items/boxPlace.js"></script>
     <script src="./lib/items/portal.js"></script>
-
+    <script src="./lib/assets-loader.js"></script>
 
     <script src="./lib/game.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Rubik+Puddles&display=swap"
+          rel="stylesheet">
 
+    <link rel="stylesheet" href="./assets/css/game.css"/>
 
     <style>
 
-        html body {
-            margin: auto;
-            overflow: hidden;
-            font-family: "Honk", system-ui;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: normal;
-            font-variation-settings: "MORF" 15,
-            "SHLN" 50;
-        }
-
-        #main-screen {
-            background: white;
-        }
-
-        #success {
-            visibility: hidden;
-            position: absolute;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            color: black;
-            font-size: 24px;
-        }
-
-        .emptyItem {
-            background: white;
-        }
-
-        .footsteps-up {
-
-            background: url('assets/images/steps.png');
-            background-position-x: -30px;
-            background-position-y: -60px;
-            opacity: 0.2;
-        }
-
-        .footsteps-down {
-            background: url('assets/images/steps.png');
-            background-position-x: -30px;
-            background-position-y: -60px;
-            opacity: 0.2;
-        }
-
-        .footsteps-left {
-            background: url('assets/images/steps.png');
-            background-position-x: 0px;
-            background-position-y: -20px;
-            opacity: 0.2;
-        }
-
-        .footsteps-right {
-            background: url('assets/images/steps.png');
-            background-position-x: -30px;
-            background-position-y: -25px;
-            opacity: 0.2;
-        }
-
-        .box {
-            background: url('assets/images/box.png') repeat;
-            background-size: 50px;
-            background-position-x: -10px;
-            width: 30px;
-            height: 30px;
-            background-position-y: -10px;
-        }
-
-        .wall {
-            background: url('assets/images/wall.png') repeat;
-            background-size: 63px;
-            background-position-x: -10px;
-            background-position-y: -10px;
-            width: 30px;
-            height: 30px;
-
-        }
-
-        .player {
-            background: no-repeat url('assets/images/avatar.png');
-            background-size: 70px;
-            background-position-x: -3px;
-            background-position-y: -4px;
-        }
-
-        .player.moveDown {
-            background-position-x: -3px;
-            background-position-y: -4px;
-        }
-
-        .player.moveUp {
-            background-position-x: -36px;
-            background-position-y: -37px
-        }
-
-        .player.moveRight {
-            background-position-x: -36px;
-            background-position-y: -4px
-        }
-
-        .player.moveLeft {
-            background-position-x: -4px;
-            background-position-y: -37px
-        }
-
-        .golem {
-            background: no-repeat url('assets/images/golem/south.png');
-            background-size: 40px;
-        }
-
-        .golem.moveDown {
-            background: no-repeat url('assets/images/golem/south.png');
-            background-size: 40px;
-        }
-
-        .golem.moveUp {
-            background: no-repeat url('assets/images/golem/north.png');
-            background-size: 40px;
-        }
-
-        .golem.moveRight {
-            background: no-repeat url('assets/images/golem/east.png');
-            background-size: 40px;
-        }
-
-        .golem.moveLeft {
-            background: no-repeat url('assets/images/golem/west.png');
-            background-size: 40px;
-        }
-
-        .box {
-            opacity: 0.8;
-        }
-
-        .box.completed {
-            opacity: 1;
-        }
-
-        .portal {
-            border-radius: 50%;
-            opacity: 0.1;
-        }
 
         .content {
-            background-color: black;
+            width: 500px;
+
             margin: 0 auto;
+            height: 100%;
             text-align: center;
-            height: 100%;
-            padding-top: 10%;
-        }
-
-        #success {
-            position: absolute;
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-            background: white;
-            opacity: 0.9;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        #success div {
-            margin-top: 100px;
+            margin-top: 200px;
         }
 
         .hud {
@@ -233,13 +80,9 @@
 
 
 <div class="content">
-    <div style=" display: inline-block; position:relative">
+    <div style=" display: block; position:relative">
         <div id="main-screen"></div>
     </div>
-    <div style="margin: 20px;">
-        <button onclick="game.restartLevel(game)">restart level</button>
-    </div>
-
 
 </div>
 

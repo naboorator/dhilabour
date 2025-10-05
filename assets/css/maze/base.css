@@ -1,0 +1,43 @@
+.maze-bg {
+    background: var(--floor-color, 'white');
+}
+
+.empty-tile {
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.box-tile {
+    background: url('../../images/box.png') repeat;
+    background-size: 50px;
+    background-position-x: -10px;
+    background-position-y: -10px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+
+    opacity: 1;
+}
+
+
+.box-tile.completed {
+    opacity: 0.8;
+}
+
+.wall-tile {
+    background: url('../../images/walls-floors.png') repeat;
+    background-size: 86px;
+    background-position-x: 0;
+    background-position-y: 80px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.portal-tile {
+    background: #000;
+    background-position-x: -5px;
+    background-position-y: -5px;
+    border-radius: 10px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+    opacity: 0.2;
+}
