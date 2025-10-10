@@ -40,8 +40,7 @@ html body {
 }
 
 #main-screen {
-
-    height: 500px;
-    width: 480px
+    min-height: 500px;
+    width: 100%;
 }
 

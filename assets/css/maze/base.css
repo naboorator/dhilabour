@@ -1,10 +1,15 @@
-.maze-bg {
-    background: var(--floor-color, 'white');
-}
 
 .empty-tile {
+] display: inline-block;
+
     width: var(--sprite-size);
     height: var(--sprite-size);
+    background-color: gray;
+    /*
+    background: url('../../images/walls-floors.png') repeat;
+    background-size: 86px;
+
+     */
 }
 
 .box-tile {
@@ -14,7 +19,6 @@
     background-position-y: -10px;
     width: var(--sprite-size);
     height: var(--sprite-size);
-
     opacity: 1;
 }
 

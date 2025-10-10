@@ -1,6 +1,7 @@
 .golem-tile {
     background: no-repeat url('../../images/golem/south.png');
     background-size: 40px;
+    background-position-x: -5px !important;
     width: var(--sprite-size);
     height: var(--sprite-size);
 }

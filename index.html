@@ -5,15 +5,21 @@
     <script src="./lib/itemFactory.js"></script>
     <script src="./lib/render/html.js"></script>
     <script src="./lib/controller/keyboard.js"></script>
+    <script src="./lib/effects/game-effects.js"></script>
+    <script src="./lib/effects/base-effect.js"></script>
+    <script src="./lib/effects/footsteps-effect.js"></script>
+    <script src="./lib/effects/explode-effect.js"></script>
+    <script src="./lib/effects/rotate-item.js"></script>
 
     <script src="./lib/screens/base-screen.js"></script>
     <script src="./lib/screens/loading-screen.js"></script>
     <script src="./lib/screens/menu-screen.js"></script>
     <script src="./lib/screens/end-game.js"></script>
     <script src="./lib/screens/maze/maze-complete.js"></script>
-    <script src="./lib/screens/maze/maze-handler.js"></script>
+
     <script src="./lib/screens/maze/maze-screen.js"></script>
     <script src="./lib/screens/maze/maze-controller.js"></script>
+    <script src="./lib/screens/maze/game-grid/game-board-grid.js"></script>
     <script src="./levels/levels.js"></script>
 
     <script src="./lib/movement/constants.js"></script>
@@ -42,15 +48,19 @@
     <link rel="stylesheet" href="./assets/css/game.css"/>
 
     <style>
-
+        .cell-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
 
         .content {
-            width: 500px;
-
+            min-width: 500px;
+            overflow: scroll;
             margin: 0 auto;
             height: 100%;
             text-align: center;
-            margin-top: 200px;
         }
 
         .hud {
