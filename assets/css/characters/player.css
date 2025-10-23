@@ -26,3 +26,8 @@
     background-position-x: -4px;
     background-position-y: -37px
 }
+
+
+.player-tile.happy {
+    filter: grayscale(100%);
+}

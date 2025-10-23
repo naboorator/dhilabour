@@ -1,27 +1,50 @@
 //.Level.1.—.gentle.intro.(2.boxes)
 const level1 = `
-################
-#..p......... .#
-#....b...####..#
-#..###.#.......#
-#...w..#....S..#
-#......#..####.#
-#......#.......#
-#.........#..l.#
-#..w......#....#
-################
+########.####################
+#....e......#.........#.....#
+#.....b.#.####.#.....#...#..#
+#..######.#....#........##..#
+#...w..#.....#b..#####....S.#
+###########.##....i..#......#
+#..t...#..#....i.....#......#
+#.b..###....#######..#t.p...#
+#..w..i...#..........#..ll..#
+#############################
 `
 level1Config = () => {
     return {
         e: {
-            speed: 45,
-            movement: MovementTypes.upDown,
+            speed: 5,
+            movement: MovementTypes.randomList,
+            movements: [
+                movementLeftRight,
+                movementUpDown
+            ],
         },
         S:
             {
-                speed: 45,
-                movement: MovementTypes.shortestPath,
+                speed: 12,
+                movement: MovementTypes.randomList,
+                movements: [
+                    movementLeftRight
+                ],
+                switchTime: 5000,
+            },
+        i: {
+            item: DynamiteItem
+        },
+
+        t: {
+            item: GenericPickUpItem,
+            parameters: {
+                name: 'heart-tile',
+                callbackOnPickup: (gameBoardGrid, item) => {
+                    console.log('gameBoaed', gameBoardGrid);
+                    gameBoardGrid.game.playerLife = gameBoardGrid.game.playerLife + 1;
+                    gameBoardGrid.effects.addEffect(new JumpEffect(gameBoardGrid.player, 20))
+                }
             }
+        }
     }
 }
 const levelX = `

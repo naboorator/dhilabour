@@ -13,18 +13,29 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: Install LFTP
-        run: sudo apt-get install -y lftp
-
-      - name: 📂 Deploy via FTP
+      - name: Setup SSH
         run: |
-          lftp -e "
-            open -u "zbarek@pusher=.divader.si,${{ secrets.FTP_PASSWORD }}" ftp://ftp.divader.si;
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set ssl:verify-certificate false;
-            mirror -R --verbose ./ /home/divader/pusher.divader.si/;
-           bye
-          "
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan pusher.divader.si >> ~/.ssh/known_hosts
+
+      - name: Deploy files
+        run: |
+          rsync -avz --delete ./ divader@pusher.divader.si:/home/divader/pusher.divader.si/
+          
+#      - name: Install LFTP
+#        run: sudo apt-get install -y lftp
+#
+#      - name: 📂 Deploy via FTP
+#        run: |
+#          lftp -e "
+#            open -u "zbarek@pusher=.divader.si,${{ secrets.FTP_PASSWORD }}" ftp://ftp.divader.si;
+#            set ftp:ssl-force true;
+#            set ftp:ssl-protect-data true;
+#            set ssl:verify-certificate false;
+#            mirror -R --verbose ./ /home/divader/pusher.divader.si/;
+#           bye
+#          "
 
 

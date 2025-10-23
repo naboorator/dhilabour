@@ -1,0 +1,17 @@
+.dynamite-tile {
+    background: no-repeat url('../../images/dynamite.png');
+    background-size: 70px;
+    background-position-x: -5px;
+    background-position-y: -9px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.dynamite-tile.on {
+    background: no-repeat url('../../images/dynamite_on.png');
+    background-size: 70px;
+    background-position-x: -5px;
+    background-position-y: -9px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
