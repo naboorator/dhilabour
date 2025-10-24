@@ -22,4 +22,4 @@ jobs:
 
       - name: Deploy files
         run: |
-          rsync -avz --delete ./ divader@pusher.divader.si:/home/divader/pusher.divader.si
+          rsync -avz -e "ssh -i ~/.ssh/zbarek-gtihub-pusher" --delete ./ divader@pusher.divader.si:/home/divader/pusher.divader.si
