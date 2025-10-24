@@ -39,9 +39,8 @@ level1Config = () => {
             parameters: {
                 name: 'heart-tile',
                 callbackOnPickup: (gameBoardGrid, item) => {
-                    console.log('gameBoaed', gameBoardGrid);
                     gameBoardGrid.game.playerLife = gameBoardGrid.game.playerLife + 1;
-                    gameBoardGrid.effects.addEffect(new JumpEffect(gameBoardGrid.player, 20))
+                    gameBoardGrid.effects.addEffect(new JumpEffect(item, 20))
                 }
             }
         }

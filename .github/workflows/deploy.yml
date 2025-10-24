@@ -23,7 +23,7 @@ jobs:
       - name: Deploy files
         run: |
           rsync -avz --delete ./ divader@pusher.divader.si:/home/divader/pusher.divader.si/
-          
+
 #      - name: Install LFTP
 #        run: sudo apt-get install -y lftp
 #
