@@ -12,14 +12,20 @@ jobs:
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
+        
+      - name: 🧬 Inject Git commit hash into index.html
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          echo "Replacing {{VERSION}} with $COMMIT_HASH"
+          sed -i "s/{{VERSION}}/$COMMIT_HASH/g" index.html
 
-      - name: Setup SSH
+      - name: 🔐 Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/zbarek-gtihub-pusher
           chmod 600 ~/.ssh/zbarek-gtihub-pusher
           ssh-keyscan pusher.divader.si >> ~/.ssh/known_hosts
 
-      - name: Deploy files
+      - name: 🚀 Deploy files
         run: |
           rsync -avz -e "ssh -i ~/.ssh/zbarek-gtihub-pusher" --delete ./ divader@pusher.divader.si:/home/divader/pusher.divader.si
