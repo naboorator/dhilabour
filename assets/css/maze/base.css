@@ -12,6 +12,13 @@
      */
 }
 
+.base-trigger {
+    background: gray;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+    opacity: 1;
+}
+
 .box-tile {
     background: url('../../images/box.png') repeat;
     background-size: 50px;

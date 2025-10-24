@@ -12,11 +12,14 @@
     <script src="./lib/effects/rotate-item.js?v={{VERSION}}"></script>
     <script src="./lib/effects/jump-effect.js?v={{VERSION}}"></script>
 
+
     <script src="./lib/types/itemInventory.js?v={{VERSION}}"></script>
 
     <script src="./lib/screens/base-screen.js?v={{VERSION}}"></script>
     <script src="./lib/screens/loading-screen.js?v={{VERSION}}"></script>
     <script src="./lib/screens/menu-screen.js?v={{VERSION}}"></script>
+    <script src="./lib/screens/maze/dialog-screen.js?v={{VERSION}}"></script>
+
     <script src="./lib/screens/end-game.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-complete.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-movement-resolver.js?v={{VERSION}}"></script>
@@ -49,11 +52,16 @@
 
     <script src="./lib/assets-loader.js?v={{VERSION}}"></script>
 
+    <script src="./lib/items/triggers/base-trigger.js?v={{VERSION}}"></script>
+    <!--    <script src="./lib/triggers/game-triggers.js?v={{VERSION}}"></script>-->
+
     <script src="./lib/game.js?v={{VERSION}}"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Rubik+Puddles&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=IM+Fell+English&family=Uncial+Antiqua&display=swap"
           rel="stylesheet">
 
     <link rel="stylesheet" href="./assets/css/game.css?v={{VERSION}}"/>
@@ -101,7 +109,9 @@
 
 
 <div class="content">
-    <div style="  display: block;  position:relative">
+    <div id="dialogs-screen"
+         style="position:absolute; width:100%; height:100%; background:red; opacity:0; z-index:1"></div>
+    <div style="display: block;  position:relative; z-index:2">
         <div id="main-screen"></div>
     </div>
 
