@@ -1,4 +1,4 @@
-name: 🚀 Deploy to FTP
+name: 🚀 Deploy to pusher.divader.si
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy files
         run: |
-          rsync -avz --delete ./ divader@divader.si:/home/divader/pusher.divader.si/
+          rsync -avz --delete ./ divader@pusher.divader.si:/
 
 #      - name: Install LFTP
 #        run: sudo apt-get install -y lftp
