@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/zbarek-gtihub-pusher
-          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/zbarek-gtihub-pusher
           ssh-keyscan pusher.divader.si >> ~/.ssh/known_hosts
 
       - name: Deploy files
