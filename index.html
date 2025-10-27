@@ -1,6 +1,9 @@
 <html lang="en" typeof="Html">
 <head>
     <title>Push<DIV>er</title>
+    <script src="./lib/game-state.js?v={{VERSION}}"></script>
+
+
     <script src="./lib/constants.js?v={{VERSION}}"></script>
     <script src="./lib/itemFactory.js?v={{VERSION}}"></script>
     <script src="./lib/render/html.js?v={{VERSION}}"></script>
@@ -11,6 +14,7 @@
     <script src="./lib/effects/explode-effect.js?v={{VERSION}}"></script>
     <script src="./lib/effects/rotate-item.js?v={{VERSION}}"></script>
     <script src="./lib/effects/jump-effect.js?v={{VERSION}}"></script>
+    <script src="./lib/effects/npc-bubble.js?v={{VERSION}}"></script>
 
 
     <script src="./lib/types/itemInventory.js?v={{VERSION}}"></script>
@@ -22,6 +26,7 @@
 
     <script src="./lib/screens/end-game.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-complete.js?v={{VERSION}}"></script>
+    <script src="./lib/screens/maze/maze-controller.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-movement-resolver.js?v={{VERSION}}"></script>
 
     <script src="./lib/screens/maze/maze-screen.js?v={{VERSION}}"></script>
@@ -39,21 +44,34 @@
 
 
     <script src="./lib/items/baseItem.js?v={{VERSION}}"></script>
-    <script src="./lib/items/basePickableItem.js?v={{VERSION}}"></script>
-    <script src="./lib/items/box.js?v={{VERSION}}"></script>
-    <script src="./lib/items/empty.js?v={{VERSION}}"></script>
-    <script src="./lib/items/player.js?v={{VERSION}}"></script>
-    <script src="./lib/items/wall.js?v={{VERSION}}"></script>
-    <script src="./lib/items/enemy.js?v={{VERSION}}"></script>
-    <script src="./lib/items/boxPlace.js?v={{VERSION}}"></script>
-    <script src="./lib/items/portal.js?v={{VERSION}}"></script>
-    <script src="./lib/items/dynamite.js?v={{VERSION}}"></script>
-    <script src="./lib/items/genericPickupItem.js?v={{VERSION}}"></script>
+
+    <script src="lib/items/environment/box.js?v={{VERSION}}"></script>
+    <script src="lib/items/environment/empty.js?v={{VERSION}}"></script>
+    <script src="lib/items/environment/wall.js?v={{VERSION}}"></script>
+    <script src="lib/items/environment/chat-bubble.js?v={{VERSION}}"></script>
+
+
+    <script src="lib/items/other/boxPlace.js?v={{VERSION}}"></script>
+    <script src="lib/items/other/portal.js?v={{VERSION}}"></script>
+
+    <script src="lib/items/pickables/basePickableItem.js?v={{VERSION}}"></script>
+    <script src="lib/items/pickables/genericPickupItem.js?v={{VERSION}}"></script>
+
+    <script src="lib/items/pickables/dynamite.js?v={{VERSION}}"></script>
+
+    <script src="lib/items/characters/movements.js?v={{VERSION}}"></script>
+    <script src="lib/items/characters/enemy.js?v={{VERSION}}"></script>
+    <script src="lib/items/characters/npc.js?v={{VERSION}}"></script>
+    <script src="lib/items/characters/player.js?v={{VERSION}}"></script>
 
     <script src="./lib/assets-loader.js?v={{VERSION}}"></script>
 
     <script src="./lib/items/triggers/base-trigger.js?v={{VERSION}}"></script>
-    <!--    <script src="./lib/triggers/game-triggers.js?v={{VERSION}}"></script>-->
+    <script src="./lib/items/triggers/step-on-trigger.js?v={{VERSION}}"></script>
+    <script src="./areas/area1/game-notices/dialogs.js?v={{VERSION}}"></script>
+    <script src="./areas/area1/map.js?v={{VERSION}}"></script>
+    <script src="./areas/area1/config.js?v={{VERSION}}"></script>
+
 
     <script src="./lib/game.js?v={{VERSION}}"></script>
 

@@ -1,0 +1,27 @@
+.peasant-tile {
+    background: no-repeat url('../../images/peasant/south.png');
+    background-size: 40px;
+    background-position-x: -5px !important;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.peasant-tile.moveDown {
+    background: no-repeat url('../../images/peasant/south.png');
+    background-size: 40px;
+}
+
+.peasant-tile.moveUp {
+    background: no-repeat url('../../images/peasant/north.png');
+    background-size: 40px;
+}
+
+.peasant-tile.moveRight {
+    background: no-repeat url('../../images/peasant/east.png');
+    background-size: 40px;
+}
+
+.peasant-tile.moveLeft {
+    background: no-repeat url('../../images/peasant/west.png');
+    background-size: 40px;
+}

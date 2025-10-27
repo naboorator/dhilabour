@@ -12,8 +12,23 @@
      */
 }
 
-.base-trigger {
-    background: gray;
+.chat-bubble-tile {
+    background: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+    top: -10px !important;
+    font-size: 12px;
+}
+
+.step-on-trigger-tile {
+    background: dimgray;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.base-trigger-tile {
+    background: transparent;
     width: var(--sprite-size);
     height: var(--sprite-size);
     opacity: 1;
