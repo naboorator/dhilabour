@@ -9,9 +9,7 @@ area1Config = {
             baseClass: 'peasant-tile',
             speed: 30,
             movementType: MovementTypes.randomList,
-            movements: [
-                movementLeftRight,
-            ],
+            movements: [],
             onInteractCallBack: (gameBoardGrid, npc, item) => {
                 // First dialog
                 const gameNotice = gameState.areas.area1.dialogs.welcome;
@@ -21,13 +19,15 @@ area1Config = {
                         gameNotice1.resolve((action) => {
                             gameBoardGrid.game.closeCurrentScreen();
 
+                            const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
+
                             let tiles = gameBoardGrid.findTileByChar('z');
 
                             tiles.forEach((tile) => {
                                 if (!npc.isTriggered()) {
-                                    gameBoardGrid.movementResolver.forceMoveLeft(tile, 2)
+                                    moveRepeatHelper.repeatMoves([MoveDirection.Left, MoveDirection.Left], tile, 200)
                                 } else {
-                                    gameBoardGrid.movementResolver.forceMoveRight(tile, 2)
+                                    moveRepeatHelper.repeatMoves([MoveDirection.Right, MoveDirection.Right], tile, 200)
                                 }
 
                             });
@@ -43,7 +43,7 @@ area1Config = {
 
 
                 })
-                gameBoardGrid.showNotice(item.position.y, item.position.y, gameNotice);
+                gameBoardGrid.showNotice(item.position.y, item.position.x, gameNotice);
                 gameBoardGrid.game.pause = true;
             }
         }
@@ -56,7 +56,7 @@ area1Config = {
             speed: 30,
             movementType: MovementTypes.randomList,
             movements: [
-                movementLeftRight,
+                // movementLeftRight,
             ],
         }
     },
@@ -76,7 +76,7 @@ area1Config = {
     t: {
         item: GenericPickUpItem,
         parameters: {
-            name: 'heart-tile',
+            baseClass: 'heart-tile',
             callbackOnPickup: (gameBoardGrid, item) => {
                 gameBoardGrid.game.playerLife = gameBoardGrid.game.playerLife + 1;
                 gameBoardGrid.effects.addEffect(new JumpEffect(item, 20))
@@ -85,7 +85,9 @@ area1Config = {
     },
     f: {
         item: WallItem,
-        parameters: {}
+        parameters: {
+            abilities: [ItemAbilities.MoveBoxes],
+        }
     },
 
     z: {
@@ -105,37 +107,81 @@ area1Config = {
 
     j: {
         item: StepOnTrigger,
+        onLeaveSubscription: null,
+        onStepSubscription: null,
+        speed: 1000,
         parameters: {
-            name: 'visible-trigger-tile',
+            baseClass: 'visible-trigger-tile',
             canRepeat: true,
+
             /**
              *
              * @param gameBoardGrid {GameBoardGrid}
-             * @param item {BaseTrigger}
+             * @param triggerItem {BaseTrigger}
              */
-            onStepCallback: (gameBoardGrid, item) => {
-                let tiles = gameBoardGrid.findTileByChar('f');
-                tiles.forEach((tile) => {
-                    if (!item.isTriggered()) {
-                        gameBoardGrid.movementResolver.forceMoveDown(tile, 2)
-                    } else {
-                        gameBoardGrid.movementResolver.forceMoveUp(tile, 2)
-                    }
+            onStepCallback: (gameBoardGrid, triggerItem) => {
+                if (area1Config.j.onLeaveSubscription) {
+                    area1Config.j.onLeaveSubscription.unsubscribe();
+                }
 
-                });
+                if (!triggerItem.isTriggered()) {
+                    triggerItem.toggleTrigger(true);
+                    const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
 
-                item.toggleTrigger();
+                    // Get tile to moves
+                    let tiles = gameBoardGrid.findTileByChar('f');
+                    const speed = area1Config.j.speed
+
+                    tiles.forEach((tile) => {
+
+                        moveRepeatHelper.repeatMoves([
+                            MoveDirection.Down,
+                            MoveDirection.Down
+                        ], tile, speed).onError((error) => {
+                            triggerItem.toggleTrigger(false);
+                        }).onSuccess((data) => {
+                            triggerItem.toggleTrigger(true);
+                        });
+                    });
+                }
+
 
             },
 
             /**
              *
              * @param gameBoardGrid {GameBoardGrid}
-             * @param item {BaseTrigger}
+             * @param triggerItem {BaseTrigger}
              */
-            onLeaveCallback: (gameBoardGrid, item) => {
-                alert('Leaving a trigger')
+            onLeaveCallback: (gameBoardGrid, triggerItem) => {
 
+                let moveTiles = (gameBoardGrid) => {
+                    const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
+
+                    let tiles = gameBoardGrid.findTileByChar('f');
+                    const speed = area1Config.j.speed
+                    tiles.forEach((tile) => {
+                        moveRepeatHelper.repeatMoves([
+                            MoveDirection.Up,
+                            MoveDirection.Up
+                        ], tile, speed).onError(() => {
+                            triggerItem.toggleTrigger(false);
+                        }).onSuccess(() => {
+                            triggerItem.toggleTrigger(false)
+                        });
+
+                    });
+                }
+
+                if (triggerItem.isTriggered()) {
+                    moveTiles(gameBoardGrid);
+                }
+
+                area1Config.j.onLeaveSubscription = triggerItem.onTriggered.subscribe((triggeredState) => {
+                    if (triggeredState) {
+                        moveTiles(gameBoardGrid);
+                    }
+                });
             }
         }
     }

@@ -3,7 +3,7 @@
     <title>Push<DIV>er</title>
     <script src="./lib/game-state.js?v={{VERSION}}"></script>
 
-
+    <script src="./lib/subject.js?v={{VERSION}}"></script>
     <script src="./lib/constants.js?v={{VERSION}}"></script>
     <script src="./lib/itemFactory.js?v={{VERSION}}"></script>
     <script src="./lib/render/html.js?v={{VERSION}}"></script>
@@ -25,6 +25,7 @@
     <script src="./lib/screens/maze/dialog-screen.js?v={{VERSION}}"></script>
 
     <script src="./lib/screens/end-game.js?v={{VERSION}}"></script>
+    <script src="./lib/screens/maze/utils/move-repeat-helper.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-complete.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-controller.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/maze-movement-resolver.js?v={{VERSION}}"></script>
@@ -132,10 +133,7 @@
     <div style="display: block;  position:relative; z-index:2">
         <div id="main-screen"></div>
     </div>
-
 </div>
-
-
 <script>
     var game = new Game(GameScreenId);
 </script>
