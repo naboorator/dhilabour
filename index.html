@@ -1,10 +1,11 @@
 <html lang="en" typeof="Html">
 <head>
     <title>Push<DIV>er</title>
-    <script src="./lib/game-state.js?v={{VERSION}}"></script>
-
-    <script src="./lib/subject.js?v={{VERSION}}"></script>
     <script src="./lib/constants.js?v={{VERSION}}"></script>
+    <script src="./lib/game-state.js?v={{VERSION}}"></script>
+    <script src="./lib/gameStore.js?v={{VERSION}}"></script>
+    <script src="./lib/subject.js?v={{VERSION}}"></script>
+
     <script src="./lib/itemFactory.js?v={{VERSION}}"></script>
     <script src="./lib/render/html.js?v={{VERSION}}"></script>
     <script src="./lib/controller/keyboard.js?v={{VERSION}}"></script>
@@ -54,9 +55,12 @@
 
     <script src="lib/items/other/boxPlace.js?v={{VERSION}}"></script>
     <script src="lib/items/other/portal.js?v={{VERSION}}"></script>
+    <script src="lib/items/other/door.js?v={{VERSION}}"></script>
+
 
     <script src="lib/items/pickables/basePickableItem.js?v={{VERSION}}"></script>
     <script src="lib/items/pickables/genericPickupItem.js?v={{VERSION}}"></script>
+    <script src="lib/items/pickables/key.js?v={{VERSION}}"></script>
 
     <script src="lib/items/pickables/dynamite.js?v={{VERSION}}"></script>
 
@@ -67,6 +71,7 @@
 
     <script src="./lib/assets-loader.js?v={{VERSION}}"></script>
 
+    <script src="./lib/items/triggers/helpers.js?v={{VERSION}}"></script>
     <script src="./lib/items/triggers/base-trigger.js?v={{VERSION}}"></script>
     <script src="./lib/items/triggers/step-on-trigger.js?v={{VERSION}}"></script>
     <script src="./areas/area1/game-notices/dialogs.js?v={{VERSION}}"></script>
@@ -128,14 +133,18 @@
 
 
 <div class="content">
+
     <div id="dialogs-screen"
          style="position:absolute; width:100%; height:100%; background:red; opacity:0; z-index:1"></div>
     <div style="display: block;  position:relative; z-index:2">
-        <div id="main-screen"></div>
+        <div id="main-screen">
+        </div>
     </div>
 </div>
 <script>
+
     var game = new Game(GameScreenId);
+
 </script>
 
 </body>

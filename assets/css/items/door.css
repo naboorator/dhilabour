@@ -1,0 +1,17 @@
+.door-tile.blue {
+    background: no-repeat url('../../images/items/blue_door.png');
+    background-size: 52px;
+    background-position-x: -12px;
+    background-position-y: -9px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.door-tile.is-open {
+    opacity: 0.3;
+    background-size: 52px;
+    background-position-x: -12px;
+    background-position-y: -9px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}

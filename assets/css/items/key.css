@@ -1,0 +1,9 @@
+.key-tile.blue {
+    background: no-repeat url('../../images/items/blue-key.png');
+    background-size: 50px;
+    background-position-x: -10px;
+    background-position-y: -0px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+    transform: rotate(20deg);
+}

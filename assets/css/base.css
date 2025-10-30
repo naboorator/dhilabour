@@ -41,5 +41,6 @@ html body {
 
 #main-screen {
     width: 100%;
+    min-width: 330px;
 }
 

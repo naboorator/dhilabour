@@ -1,3 +1,6 @@
 @import "./base.css";
+@import "./hud.css";
 @import "./characters.css";
 @import "./maze/base.css";
+@import "./items/door.css";
+@import "./items/key.css";

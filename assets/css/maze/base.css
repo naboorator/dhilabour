@@ -5,11 +5,6 @@
     width: var(--sprite-size);
     height: var(--sprite-size);
     background-color: gray;
-    /*
-    background: url('../../images/walls-floors.png') repeat;
-    background-size: 86px;
-
-     */
 }
 
 .chat-bubble-tile {
@@ -92,4 +87,8 @@
     width: var(--sprite-size);
     height: var(--sprite-size);
     opacity: 0.2;
+}
+
+.hidden {
+    display: none !important;
 }

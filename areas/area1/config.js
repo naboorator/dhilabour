@@ -12,10 +12,10 @@ area1Config = {
             movements: [],
             onInteractCallBack: (gameBoardGrid, npc, item) => {
                 // First dialog
-                const gameNotice = gameState.areas.area1.dialogs.welcome;
+                const gameNotice = GameStore.getState().areas.area1.dialogs.welcome
                 gameNotice.resolve((action) => {
                     if (action === 'Yes') {
-                        const gameNotice1 = gameState.areas.area1.dialogs.what;
+                        const gameNotice1 = GameStore.getState().areas.area1.dialogs.what
                         gameNotice1.resolve((action) => {
                             gameBoardGrid.game.closeCurrentScreen();
 
@@ -60,15 +60,7 @@ area1Config = {
             ],
         }
     },
-    S:
-        {
-            speed: 12,
-            movement: MovementTypes.randomList,
-            movements: [
-                movementLeftRight
-            ],
-            switchTime: 5000,
-        },
+
     i: {
         item: DynamiteItem
     },
@@ -78,9 +70,67 @@ area1Config = {
         parameters: {
             baseClass: 'heart-tile',
             callbackOnPickup: (gameBoardGrid, item) => {
-                gameBoardGrid.game.playerLife = gameBoardGrid.game.playerLife + 1;
+                state = GameStore.getState();
+                GameStore.changeStates(state, {
+                    ...state, player: {
+                        ...state.player,
+                        energy: state.player.energy + 50
+                    }
+                })
+
                 gameBoardGrid.effects.addEffect(new JumpEffect(item, 20))
             }
+        }
+    },
+    d: {
+        item: DoorItem,
+        parameters: {
+            baseClass: 'door-tile blue',
+            opened: false,
+            abilities: [ItemAbilities.CanInteract],
+            onInteractCallBack: (gameBoardGrid, door, avatar) => {
+                console.log(avatar)
+                const doorLocked = GameStore.getState().areas.area1.doors.blue.locked;
+
+                let hasKey = avatar.inventory.allItems().find((item) => {
+                    if (item instanceof KeyItem) {
+                        if (item.unlocksTileChar === door.tileChar) {
+                            return item;
+                        }
+                    }
+                });
+
+
+                let gameNotice;
+
+                if (hasKey) {
+                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorCanBeUnLocked;
+                } else {
+                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorLocked
+                }
+
+                gameNotice.resolve((action) => {
+                    if (action === 'unlock') {
+                        door.setLocked(false)
+                        door.open();
+                    }
+                    if (action === 'lock') {
+                        door.close();
+                        door.setLocked(true)
+                    }
+                    gameBoardGrid.game.closeCurrentScreen();
+                })
+                gameBoardGrid.showNotice(avatar.position.y, avatar.position.x, gameNotice);
+                gameBoardGrid.game.pause = true;
+
+            }
+        }
+    },
+    k: {
+        item: KeyItem,
+        parameters: {
+            baseClass: 'key-tile blue',
+            unlocks: 'd'
         }
     },
     f: {
@@ -109,7 +159,7 @@ area1Config = {
         item: StepOnTrigger,
         onLeaveSubscription: null,
         onStepSubscription: null,
-        speed: 1000,
+        speed: 200,
         parameters: {
             baseClass: 'visible-trigger-tile',
             canRepeat: true,
@@ -120,32 +170,11 @@ area1Config = {
              * @param triggerItem {BaseTrigger}
              */
             onStepCallback: (gameBoardGrid, triggerItem) => {
-                if (area1Config.j.onLeaveSubscription) {
-                    area1Config.j.onLeaveSubscription.unsubscribe();
-                }
-
-                if (!triggerItem.isTriggered()) {
-                    triggerItem.toggleTrigger(true);
-                    const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
-
-                    // Get tile to moves
-                    let tiles = gameBoardGrid.findTileByChar('f');
-                    const speed = area1Config.j.speed
-
-                    tiles.forEach((tile) => {
-
-                        moveRepeatHelper.repeatMoves([
-                            MoveDirection.Down,
-                            MoveDirection.Down
-                        ], tile, speed).onError((error) => {
-                            triggerItem.toggleTrigger(false);
-                        }).onSuccess((data) => {
-                            triggerItem.toggleTrigger(true);
-                        });
-                    });
-                }
-
-
+                triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
+                        MoveDirection.Down,
+                        MoveDirection.Down,
+                    ],
+                    gameBoardGrid.findTileByChar('f'), 100);
             },
 
             /**
@@ -154,34 +183,10 @@ area1Config = {
              * @param triggerItem {BaseTrigger}
              */
             onLeaveCallback: (gameBoardGrid, triggerItem) => {
-
-                let moveTiles = (gameBoardGrid) => {
-                    const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
-
-                    let tiles = gameBoardGrid.findTileByChar('f');
-                    const speed = area1Config.j.speed
-                    tiles.forEach((tile) => {
-                        moveRepeatHelper.repeatMoves([
-                            MoveDirection.Up,
-                            MoveDirection.Up
-                        ], tile, speed).onError(() => {
-                            triggerItem.toggleTrigger(false);
-                        }).onSuccess(() => {
-                            triggerItem.toggleTrigger(false)
-                        });
-
-                    });
-                }
-
-                if (triggerItem.isTriggered()) {
-                    moveTiles(gameBoardGrid);
-                }
-
-                area1Config.j.onLeaveSubscription = triggerItem.onTriggered.subscribe((triggeredState) => {
-                    if (triggeredState) {
-                        moveTiles(gameBoardGrid);
-                    }
-                });
+                triggerOnLeaveTriggerMovement(gameBoardGrid, triggerItem, [
+                    MoveDirection.Up,
+                    MoveDirection.Up
+                ], gameBoardGrid.findTileByChar('f'), 100);
             }
         }
     }

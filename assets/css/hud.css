@@ -1,0 +1,14 @@
+.energy-bar {
+    display: inline-block;
+    background-color: red;
+    width: 20px;
+    bottom: 0;
+
+}
+
+.water-bar {
+    display: inline-block;
+    background-color: blue;
+    width: 20px;
+    bottom: 0;
+}
