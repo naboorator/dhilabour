@@ -56,7 +56,7 @@ area1Config = {
             speed: 30,
             movementType: MovementTypes.randomList,
             movements: [
-                // movementLeftRight,
+                movementLeftRight,
             ],
         }
     },
@@ -172,7 +172,7 @@ area1Config = {
             onStepCallback: (gameBoardGrid, triggerItem) => {
                 triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
                         MoveDirection.Down,
-                        MoveDirection.Down,
+                        MoveDirection.Left,
                     ],
                     gameBoardGrid.findTileByChar('f'), 100);
             },
@@ -183,9 +183,11 @@ area1Config = {
              * @param triggerItem {BaseTrigger}
              */
             onLeaveCallback: (gameBoardGrid, triggerItem) => {
+
                 triggerOnLeaveTriggerMovement(gameBoardGrid, triggerItem, [
+                    MoveDirection.Right,
                     MoveDirection.Up,
-                    MoveDirection.Up
+
                 ], gameBoardGrid.findTileByChar('f'), 100);
             }
         }
