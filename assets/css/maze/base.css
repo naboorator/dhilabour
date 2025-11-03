@@ -9,10 +9,10 @@
 
 .chat-bubble-tile {
     background: white;
-    width: 15px;
-    height: 15px;
+    position: absolute;
+    padding: 2px;
+    z-index: 100;
     border-radius: 5px;
-    top: -10px !important;
     font-size: 12px;
 }
 

@@ -168,8 +168,11 @@ area1Config = {
              *
              * @param gameBoardGrid {GameBoardGrid}
              * @param triggerItem {BaseTrigger}
+             * @param avatar {BaseItem}
              */
-            onStepCallback: (gameBoardGrid, triggerItem) => {
+            onStepCallback: (gameBoardGrid, triggerItem, avatar) => {
+
+                avatar.addChildItem(new ChatBubbleItem({}, 'Wow, I opened hidden door.', 50))
                 triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
                         MoveDirection.Down,
                         MoveDirection.Left,
