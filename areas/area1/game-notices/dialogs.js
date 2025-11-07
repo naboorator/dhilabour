@@ -13,8 +13,8 @@ gameNotice1.addAction('Bye');
 
 
 const noticeBlueDoorLocked = new GameNotice('Damn!', 'It appears doors are locked');
-gameNotice1.avatar = './assets/images/items/blue_doors.png';
-gameNotice1.addAction('ok');
+noticeBlueDoorLocked.avatar = './assets/images/items/blue_door.png';
+noticeBlueDoorLocked.addAction('close');
 
 
 const noticeBlueDoorUnLocked = new GameNotice('Yes!', 'It appears I have a correct key!');

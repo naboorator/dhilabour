@@ -79,6 +79,15 @@
     height: var(--sprite-size);
 }
 
+.rocks-tile {
+    background: url('../../images/walls-floors.png') repeat;
+    background-size: 86px;
+    background-position-x: 0;
+    background-position-y: 50px;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
 .portal-tile {
     background: #000;
     background-position-x: -5px;

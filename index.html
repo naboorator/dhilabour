@@ -3,7 +3,7 @@
     <title>Push<DIV>er</title>
     <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    
+
     <script src="./lib/constants.js?v={{VERSION}}"></script>
     <script src="./lib/game-state.js?v={{VERSION}}"></script>
     <script src="./lib/gameStore.js?v={{VERSION}}"></script>
@@ -12,6 +12,7 @@
     <script src="./lib/sound/game-sound.js?v={{VERSION}}"></script>
     <script src="./lib/itemFactory.js?v={{VERSION}}"></script>
     <script src="./lib/render/html.js?v={{VERSION}}"></script>
+    <script src="./lib/controller/base-controller.js?v={{VERSION}}"></script>
     <script src="./lib/controller/keyboard.js?v={{VERSION}}"></script>
     <script src="./lib/effects/game-effects.js?v={{VERSION}}"></script>
     <script src="./lib/effects/base-effect.js?v={{VERSION}}"></script>
@@ -49,7 +50,6 @@
     <script src="./lib/movement/upDown.js?v={{VERSION}}"></script>
     <script src="./lib/movement/leftRight.js?v={{VERSION}}"></script>
     <script src="./lib/movement/variousMovements.js?v={{VERSION}}"></script>
-    <script src="./lib/movement/simpleAttackPlayer.js?v={{VERSION}}"></script>
     <script src="./lib/movement/shortestPath.js?v={{VERSION}}"></script>
 
 
@@ -96,6 +96,7 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=IM+Fell+English&family=Uncial+Antiqua&display=swap"
           rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./assets/css/game.css?v={{VERSION}}"/>
 
@@ -156,7 +157,7 @@
 </div>
 <script>
 
-    var game = new Game(GameScreenId);
+    var game = new Game('main-screen');
 
 </script>
 

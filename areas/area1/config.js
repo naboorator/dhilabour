@@ -18,7 +18,7 @@ area1Config = {
                         const gameNotice1 = GameStore.getState().areas.area1.dialogs.what
                         gameNotice1.resolve((action) => {
                             gameBoardGrid.game.closeCurrentScreen();
-
+                            const sound = new Sound('./assets/sounds/stone_door.ogg');
                             const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
 
                             let tiles = gameBoardGrid.findTileByChar('z');
@@ -31,7 +31,7 @@ area1Config = {
                                 }
 
                             });
-
+                            sound.play();
                             npc.toggleTrigger();
                         });
 
@@ -65,6 +65,17 @@ area1Config = {
         item: DynamiteItem
     },
 
+    o: {
+        item: WallItem,
+        parameters: {
+            baseClass: 'rocks-tile',
+            abilities: [ItemAbilities.CanExplode, ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
+            onInteractCallBack: (gameBoardGrid, wallItem, avatar) => {
+                avatar.addChatBubble('Hm this rocks could be destroyed...', 100)
+            }
+        }
+    },
+
     t: {
         item: GenericPickUpItem,
         parameters: {
@@ -87,9 +98,9 @@ area1Config = {
         parameters: {
             baseClass: 'door-tile blue',
             opened: false,
-            abilities: [ItemAbilities.CanInteract],
+            abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
             onInteractCallBack: (gameBoardGrid, door, avatar) => {
-                console.log(avatar)
+
                 const doorLocked = GameStore.getState().areas.area1.doors.blue.locked;
 
                 let hasKey = avatar.inventory.allItems().find((item) => {
@@ -111,6 +122,7 @@ area1Config = {
 
                 gameNotice.resolve((action) => {
                     if (action === 'unlock') {
+
                         door.setLocked(false)
                         door.open();
                     }
@@ -171,13 +183,14 @@ area1Config = {
              * @param avatar {BaseItem}
              */
             onStepCallback: (gameBoardGrid, triggerItem, avatar) => {
-
+                const sound = new Sound('./assets/sounds/stone_door.ogg');
                 avatar.addChildItem(new ChatBubbleItem({}, 'Wow, I opened hidden door.', 50))
                 triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
                         MoveDirection.Down,
                         MoveDirection.Left,
                     ],
                     gameBoardGrid.findTileByChar('f'), 100);
+                sound.play();
             },
 
             /**
@@ -186,12 +199,13 @@ area1Config = {
              * @param triggerItem {BaseTrigger}
              */
             onLeaveCallback: (gameBoardGrid, triggerItem) => {
-
+                const sound = new Sound('./assets/sounds/stone_door.ogg');
                 triggerOnLeaveTriggerMovement(gameBoardGrid, triggerItem, [
                     MoveDirection.Right,
                     MoveDirection.Up,
 
                 ], gameBoardGrid.findTileByChar('f'), 100);
+                sound.play();
             }
         }
     }

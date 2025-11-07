@@ -8,10 +8,12 @@
 }
 
 .door-tile.is-open {
-    opacity: 0.3;
+    opacity: 0.2 !important;
     background-size: 52px;
     background-position-x: -12px;
     background-position-y: -9px;
-    width: var(--sprite-size);
+    width: 5px !important;
     height: var(--sprite-size);
+    animation: moveLeft 3s ease forwards;
+
 }
