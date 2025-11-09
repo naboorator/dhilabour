@@ -3,6 +3,15 @@
  */
 
 area1Config = {
+    backgroundTile: {
+        item: GrassItem
+    },
+    r: {
+        item: GrassItem,
+        parameters: {
+            baseClass: 'grass-rock-tile'
+        }
+    },
     n: {
         item: NpcItem,
         parameters: {
@@ -48,6 +57,25 @@ area1Config = {
             }
         }
 
+    },
+    S: {
+        item: NextMazeTrigger,
+        parameters: {
+            baseClass: 'visible-trigger-tile',
+            loadArea: 'area2',
+            startTileChar: 'N',
+            exitOrientation: Orientation.Down
+        }
+    },
+
+    N: {
+        item: NextMazeTrigger,
+        parameters: {
+            baseClass: 'visible-trigger-tile',
+            loadArea: 'area2',
+            startTileChar: 'S',
+            exitOrientation: Orientation.Up
+        }
     },
     e: {
         item: EnemyItem,
@@ -157,16 +185,6 @@ area1Config = {
         parameters: {}
     },
 
-    p: {
-        item: PlayerItem,
-    },
-
-    x: [
-        {
-            item: WallItem,
-        }
-    ],
-
     j: {
         item: StepOnTrigger,
         onLeaveSubscription: null,
@@ -208,5 +226,5 @@ area1Config = {
                 sound.play();
             }
         }
-    }
+    },
 }

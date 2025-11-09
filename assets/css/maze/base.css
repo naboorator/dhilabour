@@ -101,3 +101,30 @@
 .hidden {
     display: none !important;
 }
+
+.grass-tile {
+    background: no-repeat url('../../images/items/floor.png');
+    background-size: 80px;
+    background-position-x: -2px !important;
+    background-position-y: -2px !important;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.mud-tile {
+    background: no-repeat url('../../images/items/floor.png');
+    background-size: 80px;
+    background-position-x: -42px !important;
+    background-position-y: -2px !important;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}
+
+.grass-rock-tile {
+    background: url('../../images/items/floor.png');
+    background-size: 80px;
+    background-position-x: 35px !important;
+    background-position-y: 35px !important;
+    width: var(--sprite-size);
+    height: var(--sprite-size);
+}

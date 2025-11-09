@@ -3,20 +3,22 @@
  */
 
 area2Config = {
-    n: [{
+    N: {
         item: NextMazeTrigger,
         parameters: {
             loadArea: 'area1',
-            startTileChar: 's',
-            canReset: true,
+            startTileChar: 'S',
+            exitOrientation: Orientation.Up
         }
     },
-        {
-            item: PlayerItem,
-            parameters: {}
+    S: {
+        item: NextMazeTrigger,
+        parameters: {
+            loadArea: 'area1',
+            startTileChar: 'N',
+            exitOrientation: Orientation.Down
         }
-    ],
-
+    },
 
     t: {
         item: GenericPickUpItem,

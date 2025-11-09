@@ -8,7 +8,7 @@
 }
 
 .door-tile.is-open {
-    opacity: 0.2 !important;
+    opacity: 1 !important;
     background-size: 52px;
     background-position-x: -12px;
     background-position-y: -9px;
