@@ -11,14 +11,14 @@ area2Config = {
             exitOrientation: Orientation.Up
         }
     },
-    S: {
-        item: NextMazeTrigger,
-        parameters: {
-            loadArea: 'area1',
-            startTileChar: 'N',
-            exitOrientation: Orientation.Down
-        }
-    },
+    // S: {
+    //     item: NextMazeTrigger,
+    //     parameters: {
+    //         loadArea: 'area1',
+    //         startTileChar: 'N',
+    //         exitOrientation: Orientation.Down
+    //     }
+    // },
 
     t: {
         item: GenericPickUpItem,

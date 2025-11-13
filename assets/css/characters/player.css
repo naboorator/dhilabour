@@ -31,3 +31,7 @@
 .player-tile.happy {
     filter: grayscale(100%);
 }
+
+.player-tile.is-holding-above {
+
+}

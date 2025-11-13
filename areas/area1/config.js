@@ -4,8 +4,9 @@
 
 area1Config = {
     backgroundTile: {
-        item: GrassItem
+        item: EmptyItem
     },
+    backgroundMusic: '/assets/sounds/music/morning.mp3',
     r: {
         item: GrassItem,
         parameters: {
@@ -126,14 +127,25 @@ area1Config = {
         parameters: {
             baseClass: 'door-tile blue',
             opened: false,
+            keyLockCode: 'sdvfrkd',
             abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
-            onInteractCallBack: (gameBoardGrid, door, avatar) => {
+            /**
+             *
+             * @param gameBoardGrid {GameBoardGrid}
+             * @param door {DoorItem}
+             * @param avatar {BaseItem}
+             * @param isAutoInteract {boolean}
+             */
+            onInteractCallBack: (gameBoardGrid, door, avatar, isAutoInteract) => {
 
-                const doorLocked = GameStore.getState().areas.area1.doors.blue.locked;
+                if (isAutoInteract && !door.isLocked()) {
+                    return
+                }
 
-                let hasKey = avatar.inventory.allItems().find((item) => {
+                let aMatchingKey = avatar.inventory.allItems().find((item) => {
                     if (item instanceof KeyItem) {
-                        if (item.unlocksTileChar === door.tileChar) {
+
+                        if (item.unlocksTileChar === door.tileChar && door.canUnlock(item.keyLockCode)) {
                             return item;
                         }
                     }
@@ -142,7 +154,7 @@ area1Config = {
 
                 let gameNotice;
 
-                if (hasKey) {
+                if (aMatchingKey) {
                     gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorCanBeUnLocked;
                 } else {
                     gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorLocked
@@ -150,9 +162,8 @@ area1Config = {
 
                 gameNotice.resolve((action) => {
                     if (action === 'unlock') {
-
                         door.setLocked(false)
-                        door.open();
+                        door.open(aMatchingKey.keyLockCode);
                     }
                     if (action === 'lock') {
                         door.close();
@@ -166,11 +177,38 @@ area1Config = {
             }
         }
     },
+
+    D: {
+        item: DoorItem,
+        parameters: {
+            baseClass: 'door-tile blue',
+            opened: true,
+            abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
+            /**
+             *
+             * @param gameBoardGrid
+             * @param door {DoorItem}
+             * @param avatar
+             * @param isAutoInteraction {boolean}
+             */
+            onInteractCallBack: (gameBoardGrid, door, avatar, isAutoInteraction) => {
+                door.setLocked(false);
+                if (!door.isOpen) {
+                    door.open(null);
+                } else if (!isAutoInteraction) {
+                    door.close();
+                }
+
+
+            }
+        }
+    },
     k: {
         item: KeyItem,
         parameters: {
             baseClass: 'key-tile blue',
-            unlocks: 'd'
+            unlocks: 'd',
+            keyLockCode: 'sdvfrkd'
         }
     },
     f: {
@@ -201,13 +239,14 @@ area1Config = {
              * @param avatar {BaseItem}
              */
             onStepCallback: (gameBoardGrid, triggerItem, avatar) => {
+                console.log('Stepped on a trigger', triggerItem);
                 const sound = new Sound('./assets/sounds/stone_door.ogg');
-                avatar.addChildItem(new ChatBubbleItem({}, 'Wow, I opened hidden door.', 50))
+                // avatar.addChildItem(new ChatBubbleItem({}, 'Wow, I opened hidden door.', 50))
                 triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
                         MoveDirection.Down,
                         MoveDirection.Left,
                     ],
-                    gameBoardGrid.findTileByChar('f'), 100);
+                    gameBoardGrid.findTileByChar('f'), 200);
                 sound.play();
             },
 
@@ -222,7 +261,7 @@ area1Config = {
                     MoveDirection.Right,
                     MoveDirection.Up,
 
-                ], gameBoardGrid.findTileByChar('f'), 100);
+                ], gameBoardGrid.findTileByChar('f'), 200);
                 sound.play();
             }
         }

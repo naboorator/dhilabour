@@ -17,9 +17,14 @@
 }
 
 .step-on-trigger-tile {
+    opacity: 0.5 !important;
     background: dimgray;
     width: var(--sprite-size);
     height: var(--sprite-size);
+}
+
+.step-on-trigger-tile.on {
+    opacity: 0.2 !important;
 }
 
 .base-trigger-tile {

@@ -12,13 +12,13 @@ gameNotice1.avatar = './assets/images/peasant/south.png';
 gameNotice1.addAction('Bye');
 
 
-const noticeBlueDoorLocked = new GameNotice('Damn!', 'It appears doors are locked');
+const noticeBlueDoorLocked = new GameNotice('Oops, door are locked. ', 'I need to find a key to go trough here');
 noticeBlueDoorLocked.avatar = './assets/images/items/blue_door.png';
 noticeBlueDoorLocked.addAction('close');
 
 
 const noticeBlueDoorUnLocked = new GameNotice('Yes!', 'It appears I have a correct key!');
-noticeBlueDoorUnLocked.avatar = './assets/images/items/blue_doors.png';
+noticeBlueDoorUnLocked.avatar = './assets/images/items/blue_door.png';
 noticeBlueDoorUnLocked.addAction('unlock');
 noticeBlueDoorUnLocked.addAction('lock');
 
