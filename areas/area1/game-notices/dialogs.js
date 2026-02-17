@@ -1,38 +1,46 @@
-let store = GameStore
-let state = {...store.getState()};
+const Area1Dialogs = {
 
-let notice = new GameNotice('Hello Stranger', 'Let me guess ha?<br> you want me to open hidden door for you dont you?')
-notice.avatar = './assets/images/peasant/south.png';
-notice.addAction('Yes')
-notice.addAction('No');
+    introDialog: () => {
+        const notice = new GameNotice('Hello Antipatix!', 'where have you been all this time, I have been waiting for you. Listen I really need your help with finding some stuff.<br><br> Will you help me?');
+        notice.avatar = './assets/images/peasant/south.png';
+        notice.addAction('Yes');
+        notice.addAction('No');
+        return notice
+    },
 
+    firstTaskDialog: () => {
+        const notice = new GameNotice('Oh.. so sweet', 'Listen travel to the south ofo here and meed Gavin. He is a .....');
+        notice.avatar = './assets/images/peasant/south.png';
+        notice.addAction('Ok Bye');
+        return notice
+    },
 
-const gameNotice1 = new GameNotice('I knew it!', 'Ok let it be, now leave me alone please.');
-gameNotice1.avatar = './assets/images/peasant/south.png';
-gameNotice1.addAction('Bye');
+    firstTaskWaitingDialog: () => {
+        const notice = new GameNotice('Back so Soon?', 'You already have my stuff?');
+        notice.avatar = './assets/images/peasant/south.png';
+        notice.addAction('Yes');
+        notice.addAction('No');
+        notice.addAction('what', 'What I need to do again?');
+        return notice
+    },
 
+    doorLockedDialog: () => {
+        const notice = new GameNotice('Oops, door are locked. ', 'I need to find a key to go trough here');
+        notice.avatar = './assets/images/items/blue_door.png';
+        notice.addAction('close');
+        return notice;
+    },
 
-const noticeBlueDoorLocked = new GameNotice('Oops, door are locked. ', 'I need to find a key to go trough here');
-noticeBlueDoorLocked.avatar = './assets/images/items/blue_door.png';
-noticeBlueDoorLocked.addAction('close');
-
-
-const noticeBlueDoorUnLocked = new GameNotice('Yes!', 'It appears I have a correct key!');
-noticeBlueDoorUnLocked.avatar = './assets/images/items/blue_door.png';
-noticeBlueDoorUnLocked.addAction('unlock');
-noticeBlueDoorUnLocked.addAction('lock');
-
-store.changeStates(state, {
-    ...state, areas: {
-        ...state.areas,
-        area1: {
-            ...state.areas.area1,
-            dialogs: {
-                welcome: notice,
-                what: gameNotice1,
-                blueDoorLocked: noticeBlueDoorLocked,
-                blueDoorCanBeUnLocked: noticeBlueDoorUnLocked
-            }
-        }
+    doorUnLockedDialog: () => {
+        const notice = new GameNotice('Yes!', 'It appears I have a correct key!');
+        notice.avatar = './assets/images/items/blue_door.png';
+        notice.addAction('unlock');
+        notice.addAction('lock');
+        return notice;
     }
-})
+
+}
+
+
+
+

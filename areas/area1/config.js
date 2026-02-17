@@ -1,20 +1,46 @@
 /**
- * @type MazeConfig
+ * @type MazeConfigInterface
  */
+
 
 area1Config = {
     backgroundTile: {
-        item: EmptyItem
+        item: GrassItem
     },
     backgroundMusic: '/assets/sounds/music/morning.mp3',
+
+
     r: {
         item: GrassItem,
         parameters: {
-            baseClass: 'grass-rock-tile'
+            tile: './assets/images/items/grass_1_rocks.png'
+        }
+    },
+    m: {
+        item: StepOnTrigger,
+        parameters: {
+            canRepeat: false,
+            /**
+             *
+             * @param gameBoardGrid {GameBoardGrid}
+             * @param triggerItem {BaseTrigger}
+             * @param avatar {PlayerItem}
+             */
+            onStepCallback: (gameBoardGrid, triggerItem, avatar) => {
+                if (shouldShowBoxCanBeLifted()) {
+                    avatar.addChatBubble('I think I can lift this boxes!', 100);
+                    updateArea1BoxLifted(true);
+                    setTimeout(() => {
+                        updateArea1BoxLifted(false);
+                    }, 10000)
+                }
+
+            },
+
         }
     },
     n: {
-        item: NpcItem,
+        item: VilligerItem,
         parameters: {
             baseClass: 'peasant-tile',
             speed: 30,
@@ -22,42 +48,78 @@ area1Config = {
             movements: [],
             onInteractCallBack: (gameBoardGrid, npc, item) => {
                 // First dialog
-                const gameNotice = GameStore.getState().areas.area1.dialogs.welcome
-                gameNotice.resolve((action) => {
-                    if (action === 'Yes') {
-                        const gameNotice1 = GameStore.getState().areas.area1.dialogs.what
-                        gameNotice1.resolve((action) => {
-                            gameBoardGrid.game.closeCurrentScreen();
-                            const sound = new Sound('./assets/sounds/stone_door.ogg');
-                            const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
+                const state = GameStore.getState();
+                const game = gameBoardGrid.game;
+                let gameNotice;
 
-                            let tiles = gameBoardGrid.findTileByChar('z');
+                if (!isGameArea1Task1Accepted()) {
+                    gameNotice = Area1Dialogs.introDialog()
+                    gameNotice.resolve((action) => {
+                        if (action === 'Yes') {
 
-                            tiles.forEach((tile) => {
-                                if (!npc.isTriggered()) {
-                                    moveRepeatHelper.repeatMoves([MoveDirection.Left, MoveDirection.Left], tile, 200)
-                                } else {
-                                    moveRepeatHelper.repeatMoves([MoveDirection.Right, MoveDirection.Right], tile, 200)
-                                }
+                            game.actions.triggerAction(new Action(area1Actions.acceptIntoTask, true))
+                            const gameNotice1 = Area1Dialogs.firstTaskDialog()
 
+                            gameNotice1.resolve((action) => {
+                                gameBoardGrid.game.closeCurrentScreen();
+                                const sound = new Sound('./assets/sounds/stone_door.ogg');
+                                const moveRepeatHelper = new MoveRepeatHelper(gameBoardGrid.movementResolver);
+
+                                let tiles = gameBoardGrid.findTileByChar('z');
+
+                                tiles.forEach((tile) => {
+                                    if (!npc.isTriggered()) {
+                                        moveRepeatHelper.repeatMoves([MoveDirection.Down, MoveDirection.Left], tile, 200)
+                                    } else {
+                                        moveRepeatHelper.repeatMoves([MoveDirection.Right, MoveDirection.Up], tile, 200)
+                                    }
+
+                                });
+
+                                
+                                sound.play();
+
+                                npc.toggleTrigger();
                             });
-                            sound.play();
-                            npc.toggleTrigger();
-                        });
 
-                        gameBoardGrid.game.closeCurrentScreen().setGameScreenAndPreserveCurrent(new DialogScreeen(gameBoardGrid.game, gameNotice1));
-                    } else {
-                        gameBoardGrid.game.closeCurrentScreen();
-                        return;
-                    }
+                            gameBoardGrid.game.closeCurrentScreen().setGameScreenAndPreserveCurrent(new DialogScreeen(gameBoardGrid.game, gameNotice1));
+                        } else {
+                            gameBoardGrid.game.closeCurrentScreen();
+                            return;
+                        }
 
 
-                })
+                    })
+                } else {
+                    gameNotice = Area1Dialogs.firstTaskWaitingDialog()
+                    gameNotice.resolve((resp) => {
+                        if (resp === 'what') {
+                            gameBoardGrid.game.closeCurrentScreen();
+
+                            const gameNotice1 = Area1Dialogs.firstTaskDialog()
+                            gameNotice1.resolve((action) => {
+                                gameBoardGrid.game.closeCurrentScreen();
+                            })
+                            gameBoardGrid.showNotice(item.position.y, item.position.x, gameNotice1);
+                        } else {
+                            gameBoardGrid.game.closeCurrentScreen();
+                        }
+
+                    })
+                }
+
                 gameBoardGrid.showNotice(item.position.y, item.position.x, gameNotice);
                 gameBoardGrid.game.pause = true;
             }
         }
 
+    },
+    e: {
+        item: EnemyItem,
+        parameters: {
+            baseClass: 'golem-tile',
+            movementType: MovementTypes.leftRight
+        }
     },
     S: {
         item: NextMazeTrigger,
@@ -78,17 +140,7 @@ area1Config = {
             exitOrientation: Orientation.Up
         }
     },
-    e: {
-        item: EnemyItem,
-        parameters: {
-            baseClass: 'golem-tile',
-            speed: 30,
-            movementType: MovementTypes.randomList,
-            movements: [
-                movementLeftRight,
-            ],
-        }
-    },
+
 
     i: {
         item: DynamiteItem
@@ -130,6 +182,7 @@ area1Config = {
             keyLockCode: 'sdvfrkd',
             abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
             /**
+             /**
              *
              * @param gameBoardGrid {GameBoardGrid}
              * @param door {DoorItem}
@@ -144,7 +197,6 @@ area1Config = {
 
                 let aMatchingKey = avatar.inventory.allItems().find((item) => {
                     if (item instanceof KeyItem) {
-
                         if (item.unlocksTileChar === door.tileChar && door.canUnlock(item.keyLockCode)) {
                             return item;
                         }
@@ -155,10 +207,11 @@ area1Config = {
                 let gameNotice;
 
                 if (aMatchingKey) {
-                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorCanBeUnLocked;
+                    gameNotice = Area1Dialogs.doorUnLockedDialog();
                 } else {
-                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorLocked
+                    gameNotice = Area1Dialogs.doorLockedDialog();
                 }
+
 
                 gameNotice.resolve((action) => {
                     if (action === 'unlock') {
@@ -181,7 +234,7 @@ area1Config = {
     D: {
         item: DoorItem,
         parameters: {
-            baseClass: 'door-tile blue',
+            baseClass: 'door-tile gray',
             opened: true,
             abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
             /**
@@ -203,14 +256,28 @@ area1Config = {
             }
         }
     },
-    k: {
-        item: KeyItem,
-        parameters: {
-            baseClass: 'key-tile blue',
-            unlocks: 'd',
-            keyLockCode: 'sdvfrkd'
+    k: [
+        {
+            item: HouseFloorItem
+        },
+        {
+            item: KeyItem,
+            parameters: {
+                baseClass: 'key-tile blue',
+                unlocks: 'd',
+                keyLockCode: 'sdvfrkd',
+                /**
+                 *
+                 * @param gameBoardGrid {GameBoardGrid}
+                 * @param item {BaseItem}
+                 * @param avatar {PlayerItem}
+                 */
+                callbackOnPickup: (gameBoardGrid, item, avatar) => {
+                    avatar.addChatBubble('Yeah found a key. It must open a door.', 100)
+                }
+            }
         }
-    },
+    ],
     f: {
         item: WallItem,
         parameters: {
@@ -239,7 +306,6 @@ area1Config = {
              * @param avatar {BaseItem}
              */
             onStepCallback: (gameBoardGrid, triggerItem, avatar) => {
-                console.log('Stepped on a trigger', triggerItem);
                 const sound = new Sound('./assets/sounds/stone_door.ogg');
                 // avatar.addChildItem(new ChatBubbleItem({}, 'Wow, I opened hidden door.', 50))
                 triggerOnStepOnTriggerMovement(gameBoardGrid, triggerItem, [
@@ -266,4 +332,9 @@ area1Config = {
             }
         }
     },
+    y: {
+        item: HouseFloorItem
+    }
+
+
 }

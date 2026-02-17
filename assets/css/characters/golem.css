@@ -4,6 +4,7 @@
     background-position-x: -5px !important;
     width: var(--sprite-size);
     height: var(--sprite-size);
+    z-index: 100;
 }
 
 .golem-tile.moveDown {

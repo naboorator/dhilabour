@@ -11,9 +11,14 @@
     <script src="./lib/game/game-notice.js?v={{VERSION}}"></script>
     <script src="./lib/sound/game-sound.js?v={{VERSION}}"></script>
     <script src="./lib/itemFactory.js?v={{VERSION}}"></script>
+
+    <script src="./lib/templateParser.js?v={{VERSION}}"></script>
+
+
     <script src="./lib/render/html.js?v={{VERSION}}"></script>
     <script src="./lib/controller/base-controller.js?v={{VERSION}}"></script>
     <script src="./lib/controller/keyboard.js?v={{VERSION}}"></script>
+    <script src="./lib/controller/aicontroller.js?v={{VERSION}}"></script>
     <script src="./lib/effects/game-effects.js?v={{VERSION}}"></script>
     <script src="./lib/effects/base-effect.js?v={{VERSION}}"></script>
     <script src="./lib/effects/footsteps-effect.js?v={{VERSION}}"></script>
@@ -30,6 +35,7 @@
     <script src="./lib/screens/menu-screen.js?v={{VERSION}}"></script>
     <script src="./lib/screens/instructions-screen.js?v={{VERSION}}"></script>
     <script src="./lib/screens/credits-screen.js?v={{VERSION}}"></script>
+    <script src="./lib/screens/maze-builder/maze-builder-screen.js?v={{VERSION}}"></script>
     <script src="./lib/screens/maze/dialog-screen.js?v={{VERSION}}"></script>
 
     <script src="./lib/screens/end-game.js?v={{VERSION}}"></script>
@@ -55,8 +61,10 @@
     <script src="./lib/movement/shortestPath.js?v={{VERSION}}"></script>
 
 
+    <script src="./lib/items/item-sprite.js?v={{VERSION}}"></script>
+    <script src="./lib/items/item-animation.js?v={{VERSION}}"></script>
     <script src="./lib/items/baseItem.js?v={{VERSION}}"></script>
-    <script src="lib/items/item-inventory.js?v={{VERSION}}"></script>
+    <script src="./lib/items/item-inventory.js?v={{VERSION}}"></script>
 
     <script src="lib/items/environment/box.js?v={{VERSION}}"></script>
     <script src="lib/items/environment/empty.js?v={{VERSION}}"></script>
@@ -67,7 +75,7 @@
     <script src="lib/items/other/boxPlace.js?v={{VERSION}}"></script>
     <script src="lib/items/other/portal.js?v={{VERSION}}"></script>
     <script src="lib/items/other/door.js?v={{VERSION}}"></script>
-
+    <script src="lib/items/other/text.js?v={{VERSION}}"></script>
 
     <script src="lib/items/pickables/basePickableItem.js?v={{VERSION}}"></script>
     <script src="lib/items/pickables/genericPickupItem.js?v={{VERSION}}"></script>
@@ -79,6 +87,8 @@
     <script src="lib/items/characters/enemy.js?v={{VERSION}}"></script>
     <script src="lib/items/characters/npc.js?v={{VERSION}}"></script>
     <script src="lib/items/characters/player.js?v={{VERSION}}"></script>
+    <script src="lib/items/characters/villiger.js?v={{VERSION}}"></script>
+
 
     <script src="./lib/assets-loader.js?v={{VERSION}}"></script>
 
@@ -87,6 +97,8 @@
     <script src="./lib/items/triggers/step-on-trigger.js?v={{VERSION}}"></script>
     <script src="./lib/items/triggers/next-maze-trigger.js?v={{VERSION}}"></script>
 
+    <script src="./areas/area1/store-handler.js?v={{VERSION}}"></script>
+    <script src="./areas/area1/area-actions.js?v={{VERSION}}"></script>
     <script src="./areas/area1/game-notices/dialogs.js?v={{VERSION}}"></script>
     <script src="./areas/area1/map.js?v={{VERSION}}"></script>
     <script src="./areas/area1/config.js?v={{VERSION}}"></script>
@@ -112,8 +124,6 @@
         .cell-wrapper {
             position: relative;
             display: inline-block;
-            width: 30px;
-            height: 30px;
         }
 
         .content {
@@ -122,16 +132,6 @@
             margin: 0 auto;
             height: 100%;
             text-align: center;
-        }
-
-        .hud {
-            border: 1px solid orange;
-            padding: 20px;
-            background: white;
-        }
-
-        .rotate {
-            animation: spin 2s infinite;
         }
 
 

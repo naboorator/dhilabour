@@ -3,6 +3,10 @@
  */
 
 area2Config = {
+    backgroundTile: {
+        item: GrassItem
+    },
+    backgroundMusic: './assets/sounds/music/forest.mp3',
     N: {
         item: NextMazeTrigger,
         parameters: {
@@ -11,16 +15,8 @@ area2Config = {
             exitOrientation: Orientation.Up
         }
     },
-    // S: {
-    //     item: NextMazeTrigger,
-    //     parameters: {
-    //         loadArea: 'area1',
-    //         startTileChar: 'N',
-    //         exitOrientation: Orientation.Down
-    //     }
-    // },
 
-    t: {
+    h: {
         item: GenericPickUpItem,
         parameters: {
             baseClass: 'heart-tile',
@@ -37,51 +33,39 @@ area2Config = {
             }
         }
     },
-    d: {
-        item: DoorItem,
+    t: {
+        item: HouseFloorItem,
+        parameters: {}
+    },
+    e: {
+        item: EnemyItem,
         parameters: {
-            baseClass: 'door-tile blue',
-            opened: false,
-            abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
-            onInteractCallBack: (gameBoardGrid, door, avatar) => {
-
-                const doorLocked = GameStore.getState().areas.area1.doors.blue.locked;
-
-                let hasKey = avatar.inventory.allItems().find((item) => {
-                    if (item instanceof KeyItem) {
-                        if (item.unlocksTileChar === door.tileChar) {
-                            return item;
-                        }
-                    }
-                });
-
-
-                let gameNotice;
-
-                if (hasKey) {
-                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorCanBeUnLocked;
-                } else {
-                    gameNotice = GameStore.getState().areas.area1.dialogs.blueDoorLocked
-                }
-
-                gameNotice.resolve((action) => {
-                    if (action === 'unlock') {
-
-                        door.setLocked(false)
-                        door.open();
-                    }
-                    if (action === 'lock') {
-                        door.close();
-                        door.setLocked(true)
-                    }
-                    gameBoardGrid.game.closeCurrentScreen();
-                })
-                gameBoardGrid.showNotice(avatar.position.y, avatar.position.x, gameNotice);
-                gameBoardGrid.game.pause = true;
-
-            }
+            baseClass: 'golem-tile',
+            movementType: MovementTypes.shortestPath
         }
     },
+
+    d: [
+        {
+            item: HouseFloorItem
+        },
+        {
+            item: DoorItem,
+            parameters: {
+                baseClass: 'door-tile blue',
+                opened: false,
+                abilities: [ItemAbilities.CanInteract, ItemAbilities.CanAutoInteract],
+                onInteractCallBack: (gameBoardGrid, door, avatar, isAutoInteraction) => {
+                    door.setLocked(false);
+                    if (!door.isOpen) {
+                        door.open(null);
+                    } else if (!isAutoInteraction) {
+                        door.close();
+                    }
+                }
+            }
+        }
+    ],
     k: {
         item: KeyItem,
         parameters: {
